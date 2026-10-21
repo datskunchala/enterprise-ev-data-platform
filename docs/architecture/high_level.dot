@@ -1,0 +1,16 @@
+
+digraph G {
+ graph [rankdir=LR, bgcolor="white", pad="0.25", nodesep="0.45", ranksep="0.6", labelloc="t", label="Enterprise EV IoT Data Platform — High-Level Architecture", fontsize=18, fontname="Arial"];
+ node [shape=box, style="rounded,filled", fillcolor="#eaf2f8", color="#315b7d", fontname="Arial", fontsize=10, margin="0.18,0.12"];
+ edge [color="#315b7d", arrowsize=0.8];
+ SRC [label="Synthetic / Source Files"];
+ ADF [label="Azure Data Factory\nMaster Pipeline", fillcolor="#d5e8d4", color="#548235"];
+ ADLS [label="ADLS Gen2\nSource / Bronze / Silver / Gold"];
+ DBX [label="Azure Databricks\nPySpark + Delta Lake", fillcolor="#fce4d6", color="#c65911"];
+ CTRL [label="Control\nAudit / Cost / Lineage"];
+ PBI [label="Power BI Desktop\nReports", fillcolor="#fff2cc", color="#bf9000"];
+ SRC -> ADLS -> ADF -> DBX;
+ DBX -> ADLS [label="read/write layers"];
+ DBX -> CTRL [label="run outputs"];
+ ADLS -> PBI [label="curated data via serving connection"];
+}

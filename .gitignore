@@ -1,0 +1,36 @@
+# Local secrets and environment files
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+secrets/
+local.settings.json
+
+# Databricks and local runtime artifacts
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+
+# Local credentials / environment
+.env
+.env.*
+*.pem
+*.key
+secrets.json
+credentials.json
+# Local editor / cache
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+
+# Keep reviewed portfolio report artifacts
+!reports/powerbi/*.pbix
+!reports/powerbi/*.pdf

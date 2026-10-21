@@ -1,0 +1,54 @@
+{
+  "name": "pl_ev_lakehouse_master",
+  "type": "Microsoft.DataFactory/factories/pipelines",
+  "properties": {
+    "activities": [
+      {
+        "name": "01_Bronze_Ingestion",
+        "type": "DatabricksNotebook",
+        "dependsOn": [],
+        "notebook": "01_all_domains_bronze",
+        "pipeline_run_id": "@pipeline().RunId"
+      },
+      {
+        "name": "02_Silver_Cleansing",
+        "type": "DatabricksNotebook",
+        "dependsOn": [
+          {
+            "activity": "01_Bronze_Ingestion",
+            "condition": "Succeeded"
+          }
+        ],
+        "notebook": "02_all_domains_silver",
+        "pipeline_run_id": "@pipeline().RunId"
+      },
+      {
+        "name": "03_Gold_Warehouse",
+        "type": "DatabricksNotebook",
+        "dependsOn": [
+          {
+            "activity": "02_Silver_Cleansing",
+            "condition": "Succeeded"
+          }
+        ],
+        "notebook": "03_all_domains_gold",
+        "pipeline_run_id": "@pipeline().RunId"
+      },
+      {
+        "name": "04_Cost_and_Alerting",
+        "type": "DatabricksNotebook",
+        "dependsOn": [
+          {
+            "activity": "03_Gold_Warehouse",
+            "condition": "Succeeded"
+          }
+        ],
+        "notebook": "04_cost_billing_alerting",
+        "pipeline_run_id": "@pipeline().RunId"
+      }
+    ],
+    "annotations": [],
+    "lastPublishTime": "2026-10-19T16:19:45Z",
+    "note": "Sanitized documentation representation reconstructed from the supplied pipeline JSON; workspace user paths intentionally replaced."
+  }
+}

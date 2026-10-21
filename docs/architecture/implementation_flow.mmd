@@ -1,0 +1,12 @@
+flowchart LR
+    SRC["Source datasets<br/>EV telemetry + business domains"] --> ADF["Azure Data Factory<br/>pl_ev_lakehouse_master"]
+    ADF --> B["01_Bronze_Ingestion<br/>Bronze layer"]
+    B -->|Succeeded| S["02_Silver_Cleansing<br/>Clean + quarantine"]
+    S -->|Succeeded| G["03_Gold_Warehouse<br/>Dimensions, fact, aggregate"]
+    G -->|Succeeded| C["04_Cost_and_Alerting<br/>Estimated cost / threshold logic"]
+    G --> PBI["Power BI report<br/>Enterprise EV dashboard"]
+    PBI --> OUT["Report consumers"]
+    ADF -. pipeline_run_id .-> B
+    ADF -. pipeline_run_id .-> S
+    ADF -. pipeline_run_id .-> G
+    ADF -. pipeline_run_id .-> C

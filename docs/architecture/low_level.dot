@@ -1,0 +1,20 @@
+
+digraph G {
+ graph [rankdir=TB, bgcolor="white", pad="0.25", nodesep="0.3", ranksep="0.5", labelloc="t", label="Enterprise EV IoT Data Platform — Low-Level Architecture", fontsize=18, fontname="Arial"];
+ node [shape=box, style="rounded,filled", fillcolor="#eaf2f8", color="#315b7d", fontname="Arial", fontsize=9, margin="0.15,0.1"];
+ edge [color="#315b7d", arrowsize=0.7];
+ SRC [label="Input files\nCSV / JSON / TXT"];
+ B [label="Bronze\nRaw landing"];
+ S [label="Silver\nCleansed / validated / quarantine"];
+ G [label="Gold\nFacts / dimensions / monthly KPIs"];
+ C [label="Control\nAudit / cost / lineage"];
+ ADF [label="ADF Master Pipeline\nActivity dependencies", fillcolor="#d5e8d4", color="#548235"];
+ N0 [label="Notebook 00\nControl initialization"];
+ N1 [label="Notebook 01\nBronze ingestion"];
+ N2 [label="Notebook 02\nSilver processing"];
+ N3 [label="Notebook 03\nGold warehouse"];
+ N4 [label="Notebook 04\nCost / audit / alerting"];
+ SQL [label="Databricks SQL serving endpoint"];
+ PBI [label="Power BI Desktop\n3-page report", fillcolor="#fff2cc", color="#bf9000"];
+ SRC -> B; ADF -> N0 -> N1 -> B; B -> N2 -> S; S -> N3 -> G; ADF -> N4 -> C; G -> SQL -> PBI;
+}
